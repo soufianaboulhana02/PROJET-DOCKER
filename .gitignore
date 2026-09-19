@@ -1,0 +1,11 @@
+# Ignorer les archives Docker
+*.tar
+*.tar.gz
+
+# Ignorer les captures réseau
+*.pcap
+captures_trafic/
+
+# Ignorer les fichiers temporaires de l'OS
+.DS_Store
+*.swp

@@ -1,0 +1,22 @@
+FROM debian:latest
+
+RUN apt-get update && apt-get install -y \
+    tcpdump \
+    net-tools \
+    iproute2 \
+    ftp \
+    vsftpd \ 
+    procps \
+    && apt-get clean
+
+RUN useradd -m -s /bin/bash etudiant && echo "etudiant:reseau" | chpasswd
+
+RUN mkdir -p /var/run/vsftpd/empty
+
+RUN echo "local_enable=YES" >> /etc/vsftpd.conf && \
+    echo "write_enable=YES" >> /etc/vsftpd.conf && \
+    echo "chroot_local_user=NO" >> /etc/vsftpd.conf && \
+    echo "seccomp_sandbox=NO" >> /etc/vsftpd.conf 
+
+
+CMD ["sleep", "infinity"]

@@ -1,0 +1,17 @@
+FROM debian:latest
+
+RUN apt-get update && apt-get install -y \
+    openssh-server \
+    openssh-client \
+    sshpass \
+    telnetd \
+    openbsd-inetd \
+    telnet \
+    tcpdump \
+    net-tools \
+    iproute2 \
+    && apt-get clean
+
+RUN useradd -m -s /bin/bash etudiant && echo "etudiant:reseau" | chpasswd
+
+CMD ["sleep", "infinity"]

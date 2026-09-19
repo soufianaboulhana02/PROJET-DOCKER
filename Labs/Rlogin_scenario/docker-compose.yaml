@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+
+  server:
+    image: rlogin-image:latest
+    container_name: server
+    command: sleep infinity
+    privileged: true
+    tty: true
+    networks:
+      - net-ares
+
+  client:
+    image: rlogin-image:latest
+    container_name: client
+    command: sleep infinity
+    privileged: true
+    tty: true
+    networks:
+      - net-ares
+
+  sonde:
+    image: sonde-img
+    container_name: sonde
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - /home/debian//PRES/captures_trafic/trafic_topo2:/data
+    command: sleep infinity
+    tty: true
+    networks:
+      - net-ares
+
+  router:
+    image: frrouting/frr
+    container_name: router
+    privileged: true
+    tty: true
+    command: sleep infinity
+    networks:
+      - net-ares
+
+networks:
+  net-ares:
+    name: net-ares
+    driver: bridge

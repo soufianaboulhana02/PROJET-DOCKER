@@ -1,0 +1,43 @@
+services:
+  server:
+   image: debian:latest
+   container_name: server
+   command: sleep infinity
+   tty: true
+   networks:
+    - net-ares
+
+  client:
+   image: debian:latest
+   container_name: client
+   command: sleep infinity
+   tty: true
+   networks:
+    - net-ares
+
+  sonde:
+   image: debian:latest
+   container_name: sonde
+   cap_add:
+    - NET_ADMIN
+   volumes:
+    - /home/debian/PRES/captures_trafic/trafic_topo2:/data
+   tty: true
+   networks:
+    - net-ares
+
+  router:
+   image: frrouting/frr:latest
+   container_name: router
+   privileged: true
+   cap_add:
+    - NET_ADMIN
+    - SYS_ADMIN
+   tty: true
+   networks:
+    - net-ares
+
+networks:
+  net-ares:
+   name: net-ares
+   driver: bridge

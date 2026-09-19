@@ -1,0 +1,6 @@
+FROM frrouting/frr:latest
+
+# Activation du démon RIP dans le fichier de configuration de FRR
+RUN sed -i 's/ripd=no/ripd=yes/g' /etc/frr/daemons
+
+CMD ["/usr/lib/frr/docker-start"]

@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  server:
+    image: server-img:latest
+    container_name: server
+    command: sleep infinity
+    tty: true
+    networks:
+      - net-ares
+
+  client:
+    image: client-img:latest
+    container_name: client
+    command: sleep infinity
+    tty: true
+    networks:
+      - net-ares
+
+  sonde:
+    image: sonde-img:latest
+    container_name: sonde
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - /home/debian/PRES/captures_trafic/trafic_topo3:/data
+    command: sleep infinity
+    tty: true
+    networks:
+      - net-ares
+
+  router1:
+    image: frr-rip-img:latest
+    container_name: router1
+    privileged: true
+    tty: true
+    networks:
+      - net-ares
+
+  router2:
+    image: frr-rip-img:latest # Utilise la même image que router1
+    container_name: router2
+    privileged: true
+    tty: true
+    networks:
+      - net-ares
+
+networks:
+  net-ares:
+    name: net-ares
+    driver: bridge
